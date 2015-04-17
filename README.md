@@ -1,2 +1,2 @@
 # Skillmix
-A Match maker for trading skills.
+A matchmaker for trading skills.
