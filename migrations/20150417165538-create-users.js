@@ -10,12 +10,10 @@ module.exports = {
       },
       username: {
         type: DataTypes.STRING,
-        allowNull: false,
         unique: true
       },
       password_digest: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       first_name: {
         type: DataTypes.STRING
@@ -24,21 +22,11 @@ module.exports = {
         type: DataTypes.STRING
       },
       location: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
         unique: true
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE
       }
     }).done(done);
   },

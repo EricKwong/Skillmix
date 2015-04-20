@@ -3,15 +3,109 @@
   <head>
     <title>Socket.IO chat</title> 
     <!-- <script src="/socket.io/socket.io.js"></script> -->
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
 
     <!-- <script src="js/chat.js"></script> -->
+    <script src="js/app.js"></script>
+    <script src="js/models/currentuser.js"></script>
+    <script src="js/models/user.js"></script>
+    <script src="js/collections/users.js"></script>
+    <script src="js/views/signup.js"></script>
+    <script src="js/views/login.js"></script>
+    <script src="js/views/sidebar.js"></script>
+    <script src="js/views/user.js"></script>
+    <script src="js/views/main.js"></script>
+    
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <ul id="messages"></ul>
+    <section id="main-container"></section>
+    <p id="profile-button">Profile</p>
+      
+    <section id="signup-container">
+      <ul id="signup-errors"></ul>
+      <section id="signup-form"></section> 
+    </section>
+
+    <section id="login-container">
+    </section>
+      
+    <section id="sidebar-container"></section>
+
+
+
+  <!--   <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    </form> -->
+
+    <template id="login-template">
+      <input id="login-username" type="text" placeholder="Username">
+      <input id="login-password" type="password" placeholder="Password">
+      <button id="login-button">Login</button>
+    </template>
+
+    <template id="logout-template">
+      <p>Hello, {{username}} - 
+        <button id="logout-button">Log Out</button>
+      </p>
+    </template>
+
+    <template id="signup-template">
+      <p>First name<br> <input type="text" id="signup-firstname">
+      </p>
+      <p>Last name<br> <input type="text" id="signup-lastname">
+      </p>
+      <p>Location<br> <input type="text" id="signup-location">
+      </p>
+      <p>E-mail<br> <input type="text" id="signup-email">
+      </p>
+      <p>Username<br> <input type="text" id="signup-username">
+      </p>
+      <p>Password<br> <input type="password" id="signup-password">
+      </p>
+      <p>Confirm password<br> <input type="password" id="signup-confirm-password">
+      </p>
+      <button id="signup-button">Sign Up</button>
+    </template>
+
+    <template id="sidebar-template">
+      <p id="sidebar-username">{{username}}</p>
+      <img id="sidebar-image" src="{{image}}">
+      <ul id="sidebar-skills">
+        <input id="add-known-skills" placeholder="Skills you know">
+        {{#each UserKnow}}
+          <li class="skill">{{name}}</li>
+        {{/each}}
+        <input id="add-wanted-skills" placeholder="Skills you want">
+        {{#each UserWant}}
+          <li class="skill">{{name}}</li>
+        {{/each}}
+      </ul>
+    </template>
+
+    <template id="user-template">
+      <p class="main-username">{{username}}</p>
+      <p class="main-firstname">{{first_name}}</p>
+      <p class="main-lastname">{{last_name}}</p>
+      <p class="main-location">{{location}}</p>
+      <ul>
+        <h4>Skills I Know</h4>
+        {{#each UserKnow}}
+         <li class="skill">{{name}}</li>
+        {{/each}}
+      </ul>
+
+      <ul>
+        <h4>Skills I Want</h4>
+        {{#each UserWant}}
+          <li class="skill">{{name}}</li>
+        {{/each}}
+      </ul>
+    </template>
+
   </body>
 </html>

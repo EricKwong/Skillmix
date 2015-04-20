@@ -1,1 +1,51 @@
-@import url(chat.css);
+/*@import url(chat.css);*/
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+
+li {
+	margin-bottom: 5px;
+}
+
+h4 {
+	margin: 0px 0px 5px 0px;
+}
+
+p {
+	margin: 0px 0px 10px 0px;
+	padding: 0;
+}
+
+.skill {
+	margin-left: 10px;
+}
+
+#login-container {
+	float: right;
+	position: fixed;
+	top: 0;
+	right: 0;
+}
+
+#signup-container {
+	float: right;
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: 30px;
+}
+
+.user {
+	float: left;
+	background-color: honeydew;
+	margin: 2px;
+	padding: 15px;
+}
+
+#profile-button {
+	float: right;
+	clear: both;
+}
