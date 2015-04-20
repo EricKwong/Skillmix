@@ -23,6 +23,14 @@ App.Views.Login = Backbone.View.extend({
 				thisView.renderLogout();
 				App.sidebarView.model.url = "/users/" + response.currentUser;
 				App.sidebarView.model.fetch();
+				$.get("/users/" + response.currentUser)
+					.done(function(user) {
+						App.matchedUsersCollection.fetch({
+							data: {knowSkills: JSON.stringify(user.UserKnow), wantSkills: JSON.stringify(user.UserWant)},
+							processData: true,
+							reset: true
+						});
+					});
 			} else {
 				App.signUpView.render();
 				App.sidebarView.$el.empty();

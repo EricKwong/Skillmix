@@ -13,6 +13,8 @@
     <script src="js/models/currentuser.js"></script>
     <script src="js/models/user.js"></script>
     <script src="js/collections/users.js"></script>
+    <script src="js/collections/matched-users.js"></script>
+    <script src="js/views/logged-in-main.js"></script>
     <script src="js/views/signup.js"></script>
     <script src="js/views/login.js"></script>
     <script src="js/views/sidebar.js"></script>
@@ -23,7 +25,6 @@
   </head>
   <body>
     <section id="main-container"></section>
-    <p id="profile-button">Profile</p>
       
     <section id="signup-container">
       <ul id="signup-errors"></ul>
@@ -34,6 +35,7 @@
     </section>
       
     <section id="sidebar-container"></section>
+    <p id="profile-button">Profile</p>
 
 
 
@@ -88,7 +90,7 @@
     </template>
 
     <template id="user-template">
-      <p class="main-username">{{username}}</p>
+      <h3 class="main-username">{{username}}</h3>
       <p class="main-firstname">{{first_name}}</p>
       <p class="main-lastname">{{last_name}}</p>
       <p class="main-location">{{location}}</p>

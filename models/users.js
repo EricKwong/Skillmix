@@ -52,6 +52,42 @@ module.exports = function(sequelize, DataTypes) {
 
     timestamps: false,
 
+    instanceMethods: {
+      findKnowMatches: function(knownSkills) {
+        var matchedUsers = [];
+        this.forEach(function(user) {
+          user.UserWant.forEach(function(wantSkill) {
+            knownSkills.forEach(function(skill) {
+              if (wantSkill.id === skill.id) {
+                if (matchedUsers.indexOf(user) === -1) {
+                  matchedUsers.push(user);
+                }
+              }
+            });
+          });
+        });
+
+        return matchedUsers;
+      },
+
+      findWantMatches: function(wantedSkills) {
+        var matchedUsers = [];
+        this.forEach(function(user) {
+          user.UserKnow.forEach(function(knowSkill) {
+            wantedSkills.forEach(function(skill) {
+              if (knowSkill.id === skill.id) {
+                if (matchedUsers.indexOf(user) === -1) {
+                  matchedUsers.push(user);
+                }
+              }
+            });
+          });
+        });
+
+        return matchedUsers;
+      }
+    },
+
     classMethods: {
       associate: function(models) {
         users.belongsToMany(models.skills, {
@@ -66,6 +102,30 @@ module.exports = function(sequelize, DataTypes) {
           as: "UserWant"
         });
       }
+
+      // findMatches: function(knownSkills, wantedSkills) {
+      //   console.log(knownSkills)
+      //   users.findAll({
+      //     include: [{
+      //       model: Skill,
+      //       as: "UserKnow"
+      //     },
+      //     {
+      //       model: Skill,
+      //       as: "UserWant"
+      //     }]
+      //   }).then(function(users) {
+      //     users
+      //       .findKnowMatches(knownSkills)
+      //       .then(function(knowMatchedUsers) {
+      //         knowMatchedUsers
+      //           .findWantMatches(wantedSkills)
+      //           .then(function(wantedMatchedUsers) {
+      //             return wantedMatchedUsers;
+      //           });
+      //       });
+      //   });
+      // }
     }
   });
   return users;

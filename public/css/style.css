@@ -38,6 +38,11 @@ p {
 	margin: 30px;
 }
 
+#sidebar-container {
+	float: right;
+	margin-top: 20px;
+}
+
 .user {
 	float: left;
 	background-color: honeydew;
@@ -47,5 +52,5 @@ p {
 
 #profile-button {
 	float: right;
-	clear: both;
+	margin: 20px;
 }

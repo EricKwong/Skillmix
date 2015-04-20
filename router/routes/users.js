@@ -28,6 +28,31 @@ router.get("/", function(req, res) {
 		});
 });
 
+router.get("/matched", function(req, res) {
+	User
+		.findAll({
+			include: [{
+				model: Skill,
+				as: "UserKnow"
+			},
+			{
+				model: Skill,
+				as: "UserWant"
+			}]
+		})
+		.then(function(users) {
+			users
+				.findKnowMatches(req.body.knowSkills)
+				.then(function(knowMatchedUsers) {
+          	knowMatchedUsers
+            	.findWantMatches(req.body.wantSkills)
+              .then(function(wantedMatchedUsers) {
+                res.send(wantedMatchedUsers);
+       				});
+         });
+		});
+});
+
 router.post("/", function(req, res) {
 	bcrypt.hash(req.body.password, 10, function(err, hash) {
 		delete req.body.password;
