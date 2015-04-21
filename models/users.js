@@ -70,6 +70,14 @@ module.exports = function(sequelize, DataTypes) {
         return matchedUsers;
       },
 
+      sayMyName: function() {
+        return this.first_name;
+      },
+
+      skills: function() {
+        return "stubb";
+      },
+
       findWantMatches: function(wantedSkills) {
         var matchedUsers = [];
         this.forEach(function(user) {
