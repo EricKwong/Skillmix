@@ -28,7 +28,8 @@ router.get("/", function(req, res) {
 		});
 });
 
-router.get("/matched", function(req, res) {
+router.post("/matched", function(req, res) {
+	var Users = [];
 	User
 		.findAll({
 			include: [{
@@ -41,15 +42,21 @@ router.get("/matched", function(req, res) {
 			}]
 		})
 		.then(function(users) {
-			users
-				.findKnowMatches(req.body.knowSkills)
-				.then(function(knowMatchedUsers) {
-          	knowMatchedUsers
-            	.findWantMatches(req.body.wantSkills)
-              .then(function(wantedMatchedUsers) {
-                res.send(wantedMatchedUsers);
-       				});
-         });
+			users.forEach(function(user) {
+				user.getKnowSkillsUsers(req.body.knowSkills)
+					.then(function(user) {
+						if (user) {
+							user.getWantSkillsUsers(req.body.wantSkills)
+								.then(function(user) {
+									if (user) {
+										Users.push(user);
+									}
+								});
+						}
+					});
+			});
+		}).then(function() {
+			res.send(Users);
 		});
 });
 

@@ -15,5 +15,4 @@ App.Views.Main = Backbone.View.extend({
 		this.$el.append(userView.$el);
 	}
 
-
 });

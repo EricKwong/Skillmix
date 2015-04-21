@@ -25,11 +25,20 @@ App.Views.Login = Backbone.View.extend({
 				App.sidebarView.model.fetch();
 				$.get("/users/" + response.currentUser)
 					.done(function(user) {
-						App.matchedUsersCollection.fetch({
-							data: {knowSkills: JSON.stringify(user.UserKnow), wantSkills: JSON.stringify(user.UserWant)},
-							processData: true,
-							reset: true
-						});
+						// App.matchedUsersCollection.fetch({
+						// 	data: {knowSkills: JSON.stringify(user.UserKnow), wantSkills: JSON.stringify(user.UserWant)},
+						// 	processData: true,
+						// 	reset: true
+						// });
+					var currentUserKnow = user.UserKnow.map(function(skill) {
+						return skill.id;
+					});
+
+					var currentUserWant = user.UserWant.map(function(skill) {
+						return skill.id;
+					});
+					
+					$.post("/users/matched", {knowSkills: currentUserKnow, wantSkills: currentUserWant});
 					});
 			} else {
 				App.signUpView.render();

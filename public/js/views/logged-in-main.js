@@ -15,4 +15,4 @@ App.Views.LoggedInMain = Backbone.View.extend({
 		var userView = new App.Views.User({model: model});
 		this.$el.append(userView.$el);
 	}
-}); 
+});

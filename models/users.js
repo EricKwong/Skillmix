@@ -1,3 +1,5 @@
+ var _ = require('underscore');
+
 "use strict";
 module.exports = function(sequelize, DataTypes) {
   var users = sequelize.define("users", {
@@ -53,39 +55,35 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
 
     instanceMethods: {
-      findKnowMatches: function(knownSkills) {
-        var matchedUsers = [];
-        this.forEach(function(user) {
-          user.UserWant.forEach(function(wantSkill) {
-            knownSkills.forEach(function(skill) {
-              if (wantSkill.id === skill.id) {
-                if (matchedUsers.indexOf(user) === -1) {
-                  matchedUsers.push(user);
-                }
-              }
-            });
-          });
+
+      getUserKnowSkill: function() {
+        var userSkills = this.UserKnow.map(function(skill) {
+          return skill.id;
         });
 
-        return matchedUsers;
+        return userSkills;
       },
 
-      findWantMatches: function(wantedSkills) {
-        var matchedUsers = [];
-        this.forEach(function(user) {
-          user.UserKnow.forEach(function(knowSkill) {
-            wantedSkills.forEach(function(skill) {
-              if (knowSkill.id === skill.id) {
-                if (matchedUsers.indexOf(user) === -1) {
-                  matchedUsers.push(user);
-                }
-              }
-            });
-          });
+      getUserWantSkill: function() {
+        var userSkills = this.UserWant.map(function(skill) {
+          return skill.id;
         });
 
-        return matchedUsers;
+        return userSkills;
+      },
+
+      getKnowSkillsUsers: function(currentUserSkills) {
+        if (_.intersection(this.getUserKnowSkill, currentUserSkills).length > 0) {
+          return this;
+        }
+      },
+
+      getWantSkillsUsers: function(currentUserSkills) {
+        if (_.intersection(this.getUserWantSkill, currentUserSkills).length > 0) {
+          return this;
+        }
       }
+
     },
 
     classMethods: {
