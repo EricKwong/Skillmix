@@ -57,7 +57,7 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods: {
 
       getUserKnowSkill: function() {
-        var userSkills = this.UserKnow.map(function(skill) {
+        var userSkills = this.UserKnows.map(function(skill) {
           return skill.id;
         });
 
@@ -65,7 +65,7 @@ module.exports = function(sequelize, DataTypes) {
       },
 
       getUserWantSkill: function() {
-        var userSkills = this.UserWant.map(function(skill) {
+        var userSkills = this.UserWants.map(function(skill) {
           return skill.id;
         });
 
@@ -73,13 +73,19 @@ module.exports = function(sequelize, DataTypes) {
       },
 
       getKnowSkillsUsers: function(currentUserSkills) {
-        if (_.intersection(this.getUserKnowSkill, currentUserSkills).length > 0) {
+        var newCurrentUserSkills = currentUserSkills.map(function(id) {
+          return parseInt(id);
+        });
+        if (_.intersection(this.getUserKnowSkill(), newCurrentUserSkills).length > 0) {
           return this;
         }
       },
 
       getWantSkillsUsers: function(currentUserSkills) {
-        if (_.intersection(this.getUserWantSkill, currentUserSkills).length > 0) {
+        var newCurrentUserSkills = currentUserSkills.map(function(id) {
+          return parseInt(id);
+        });
+        if (_.intersection(this.getUserWantSkill(), newCurrentUserSkills).length > 0) {
           return this;
         }
       }
@@ -91,39 +97,15 @@ module.exports = function(sequelize, DataTypes) {
         users.belongsToMany(models.skills, {
           through: "skills_users_know",
           foreignKey: "user_id",
-          as: "UserKnow"
+          as: "UserKnows"
         });
 
         users.belongsToMany(models.skills, {
           through: "skills_users_want",
           foreignKey: "user_id",
-          as: "UserWant"
+          as: "UserWants"
         });
       }
-
-      // findMatches: function(knownSkills, wantedSkills) {
-      //   console.log(knownSkills)
-      //   users.findAll({
-      //     include: [{
-      //       model: Skill,
-      //       as: "UserKnow"
-      //     },
-      //     {
-      //       model: Skill,
-      //       as: "UserWant"
-      //     }]
-      //   }).then(function(users) {
-      //     users
-      //       .findKnowMatches(knownSkills)
-      //       .then(function(knowMatchedUsers) {
-      //         knowMatchedUsers
-      //           .findWantMatches(wantedSkills)
-      //           .then(function(wantedMatchedUsers) {
-      //             return wantedMatchedUsers;
-      //           });
-      //       });
-      //   });
-      // }
     }
   });
   return users;

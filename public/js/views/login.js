@@ -19,31 +19,36 @@ App.Views.Login = Backbone.View.extend({
 		$.get("/sessions").done(function(response) {
 			if (response.currentUser) {
 				App.signUpView.$el.empty();
+				$('#signup-errors').empty();
 				thisView.currentUser = response.currentUser;
 				thisView.renderLogout();
 				App.sidebarView.model.url = "/users/" + response.currentUser;
 				App.sidebarView.model.fetch();
 				$.get("/users/" + response.currentUser)
 					.done(function(user) {
-						// App.matchedUsersCollection.fetch({
-						// 	data: {knowSkills: JSON.stringify(user.UserKnow), wantSkills: JSON.stringify(user.UserWant)},
-						// 	processData: true,
-						// 	reset: true
-						// });
-					var currentUserKnow = user.UserKnow.map(function(skill) {
-						return skill.id;
-					});
+						var currentUserKnow = user.UserKnows.map(function(skill) {
+							return skill.id;
+						});
 
-					var currentUserWant = user.UserWant.map(function(skill) {
-						return skill.id;
+						var currentUserWant = user.UserWants.map(function(skill) {
+							return skill.id;
+						});
+						
+						App.matchedUsersCollection.fetch({
+							data: {knowSkills: currentUserKnow, wantSkills: currentUserWant},
+							processData: true,
+							type: "POST",
+							reset: true
+						});
 					});
-					
-					$.post("/users/matched", {knowSkills: currentUserKnow, wantSkills: currentUserWant});
-					});
+					$("#sidebar-button").text("Profile");
 			} else {
-				App.signUpView.render();
 				App.sidebarView.$el.empty();
+				App.signUpView.render();
+				$('#signup-errors').empty();
 				thisView.renderLogin();
+				App.usersCollection.fetch();
+				$("#sidebar-button").text("Sign Up");
 			}
 		});
 	},

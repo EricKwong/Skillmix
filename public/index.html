@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.js"></script>
 
     <!-- <script src="js/chat.js"></script> -->
     <script src="js/app.js"></script>
@@ -22,20 +23,34 @@
     <script src="js/views/main.js"></script>
     
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css">
   </head>
   <body>
-    <section id="main-container"></section>
+
+    <header>
+      <section logo="logo">
+        <h1 id="logo">Skillmix</h1>
+      </section>
+      <!-- <input id="search" type="text" placeholder="Search"> -->
+      <section id="login-container"></section>
+    </header>
+
+    <section id="container">
+      <section id="sidebar-container">
+        <section id="signup-container">
+          <ul id="signup-errors"></ul>
+          <section id="signup-form"></section> 
+        </section>
       
-    <section id="signup-container">
-      <ul id="signup-errors"></ul>
-      <section id="signup-form"></section> 
+        <section id="profile-container"></section>
+      </section>
+      
+      <p id="sidebar-button">Profile</p>
+      <section id="main-container"></section>
     </section>
 
-    <section id="login-container">
-    </section>
+
       
-    <section id="sidebar-container"></section>
-    <p id="profile-button">Profile</p>
 
 
 
@@ -51,59 +66,76 @@
     </template>
 
     <template id="logout-template">
-      <p>Hello, {{username}} - 
+      <p>Hello, {{username}} — 
         <button id="logout-button">Log Out</button>
       </p>
     </template>
 
     <template id="signup-template">
-      <p>First name<br> <input type="text" id="signup-firstname">
+      <h3>Create an Account</h3>
+      <p>First name <br> 
+        <input type="text" id="signup-firstname">
       </p>
-      <p>Last name<br> <input type="text" id="signup-lastname">
+      <p>Last name <br> 
+        <input type="text" id="signup-lastname">
       </p>
-      <p>Location<br> <input type="text" id="signup-location">
+      <p>Location <br> 
+        <input type="text" id="signup-location">
       </p>
-      <p>E-mail<br> <input type="text" id="signup-email">
+      <p>E-mail <br> 
+        <input type="text" id="signup-email">
       </p>
-      <p>Username<br> <input type="text" id="signup-username">
+      <p>Username <br> 
+        <input type="text" id="signup-username">
       </p>
-      <p>Password<br> <input type="password" id="signup-password">
+      <p>Password <br> 
+        <input type="password" id="signup-password">
       </p>
-      <p>Confirm password<br> <input type="password" id="signup-confirm-password">
+      <p>Confirm password <br> 
+        <input type="password" id="signup-confirm-password">
       </p>
       <button id="signup-button">Sign Up</button>
     </template>
 
     <template id="sidebar-template">
+      <form action="/file-upload"
+      class="dropzone"
+      id="my-awesome-dropzone"></form>
       <p id="sidebar-username">{{username}}</p>
       <img id="sidebar-image" src="{{image}}">
       <ul id="sidebar-skills">
         <input id="add-known-skills" placeholder="Skills you know">
-        {{#each UserKnow}}
-          <li class="skill">{{name}}</li>
+        {{#each UserKnows}}
+          <li class="skill-list-item">
+            <p class="skill" data-skill-id="{{id}}">{{name}}</p>
+            <p class="delete delete-know-skill" data-skill-id="{{id}}">X</p>
+          </li>
         {{/each}}
         <input id="add-wanted-skills" placeholder="Skills you want">
-        {{#each UserWant}}
-          <li class="skill">{{name}}</li>
+        {{#each UserWants}}
+          <li class="skill-list-item">
+            <p class="skill" data-skill-id="{{id}}">{{name}}</p>
+            <p class="delete delete-want-skill" data-skill-id="{{id}}">X</p>
+          </li>
         {{/each}}
       </ul>
     </template>
 
     <template id="user-template">
-      <h3 class="main-username">{{username}}</h3>
+      <h2 class="main-username">{{username}}</h2>
       <p class="main-firstname">{{first_name}}</p>
       <p class="main-lastname">{{last_name}}</p>
       <p class="main-location">{{location}}</p>
       <ul>
         <h4>Skills I Know</h4>
-        {{#each UserKnow}}
+        {{#each UserKnows}}
          <li class="skill">{{name}}</li>
         {{/each}}
       </ul>
 
       <ul>
         <h4>Skills I Want</h4>
-        {{#each UserWant}}
+        {{#each UserWants}}
           <li class="skill">{{name}}</li>
         {{/each}}
       </ul>

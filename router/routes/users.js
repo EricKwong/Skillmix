@@ -16,11 +16,11 @@ router.get("/", function(req, res) {
 		.findAll({
 			include: [{
 				model: Skill,
-				as: "UserKnow"
+				as: "UserKnows"
 			},
 			{
 				model: Skill,
-				as: "UserWant"
+				as: "UserWants"
 			}]
 		})
 		.then(function(users) {
@@ -29,34 +29,33 @@ router.get("/", function(req, res) {
 });
 
 router.post("/matched", function(req, res) {
-	var Users = [];
 	User
 		.findAll({
 			include: [{
 				model: Skill,
-				as: "UserKnow"
+				as: "UserKnows"
 			},
 			{
 				model: Skill,
-				as: "UserWant"
+				as: "UserWants"
 			}]
 		})
 		.then(function(users) {
+			var knowUsers = [];
 			users.forEach(function(user) {
-				user.getKnowSkillsUsers(req.body.knowSkills)
-					.then(function(user) {
-						if (user) {
-							user.getWantSkillsUsers(req.body.wantSkills)
-								.then(function(user) {
-									if (user) {
-										Users.push(user);
-									}
-								});
-						}
-					});
+				var userNow = user.getKnowSkillsUsers(req.body.wantSkills);
+				if (userNow) {
+					knowUsers.push(userNow);
+				}
 			});
-		}).then(function() {
-			res.send(Users);
+			var matchedUsers = [];
+			knowUsers.forEach(function(user) {
+				var userNow = user.getWantSkillsUsers(req.body.knowSkills);
+				if (userNow) {
+					matchedUsers.push(userNow);
+				}
+			});
+			res.send(matchedUsers);
 		});
 });
 
@@ -89,11 +88,11 @@ router.get("/:id", function(req, res) {
 			where: {id: req.params.id},
 			include: [{
 				model: Skill,
-				as: "UserKnow"
+				as: "UserKnows"
 			},
 			{
 				model: Skill,
-				as: "UserWant"
+				as: "UserWants"
 			}]
 		})
 		.then(function(user) {
@@ -106,9 +105,7 @@ router.put("/:id/add_known_skill", function(req, res) {
 		.findOne(req.params.id)
 		.then(function(user) {
 			Skill
-				.findOne({
-					where: {id: req.body.skill_id} 
-				})
+				.findOne(req.body.skill_id)
 				.then(function(skill) {
 					user.addUserKnow(skill)
 					res.send(skill);
@@ -121,11 +118,35 @@ router.put("/:id/add_wanted_skill", function(req, res) {
 		.findOne(req.params.id)
 		.then(function(user) {
 			Skill
-				.findOne({
-					where: {id: req.body.skill_id} 
-				})
+				.findOne(req.body.skill_id)
 				.then(function(skill) {
 					user.addUserWant(skill)
+					res.send(skill);
+				});
+		});
+});
+
+router.put("/:id/remove_known_skill", function(req, res) {
+	User
+		.findOne(req.params.id)
+		.then(function(user) {
+			Skill
+				.findOne(req.body.skill_id)
+				.then(function(skill) {
+					user.removeUserKnow(skill)
+					res.send(skill);
+				});
+		});
+});
+
+router.put("/:id/remove_wanted_skill", function(req, res) {
+	User
+		.findOne(req.params.id)
+		.then(function(user) {
+			Skill
+				.findOne(req.body.skill_id)
+				.then(function(skill) {
+					user.removeUserWant(skill)
 					res.send(skill);
 				});
 		});

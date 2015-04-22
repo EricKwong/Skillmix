@@ -5,11 +5,13 @@ App.Views.Sidebar = Backbone.View.extend({
 		this.listenTo(this.model, "sync", this.render);
 	},
 
-	el: "#sidebar-container",
+	el: "#profile-container",
 
 	events: {
 		"keypress #add-known-skills" : "addKnownSkill",
-		"keypress #add-wanted-skills" : "addWantedSkill"
+		"keypress #add-wanted-skills" : "addWantedSkill",
+		"click .delete-know-skill" : "removeKnowSkill",
+		"click .delete-want-skill" : "removeWantSkill"
 	},
 
 	render: function() {
@@ -48,6 +50,30 @@ App.Views.Sidebar = Backbone.View.extend({
 					});
 				});
 		}
+	},
+
+	removeKnowSkill: function(event) {
+		var clickedSkillId = $(event.currentTarget).data("skill-id");
+		$.ajax({
+			url: App.currentUserModel.url + "/remove_known_skill",
+			method: "PUT",
+			data: {skill_id: clickedSkillId}
+		}).done(function() {
+			App.currentUserModel.fetch();
+			App.matchedUsersCollection.fetch({reset: true});
+		});
+	},
+
+	removeWantSkill: function(event) {
+		var clickedSkillId = $(event.currentTarget).data("skill-id");
+		$.ajax({
+			url: App.currentUserModel.url + "/remove_wanted_skill",
+			method: "PUT",
+			data: {skill_id: clickedSkillId}
+		}).done(function() {
+			App.currentUserModel.fetch();
+			App.matchedUsersCollection.fetch({reset: true});
+		});
 	}
 
 });

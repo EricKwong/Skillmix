@@ -7,11 +7,11 @@ App.Views.LoggedInMain = Backbone.View.extend({
 	el: "#main-container",
 
 	render: function() {
+		this.$el.empty();
 		this.collection.each(this.renderOne, this);
 	},
 
 	renderOne: function(model) {
-		this.$el.empty();
 		var userView = new App.Views.User({model: model});
 		this.$el.append(userView.$el);
 	}

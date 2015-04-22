@@ -3,7 +3,6 @@ App.Views.SignUp = Backbone.View.extend({
 	initialize: function() {
 		console.log("Signup view created");
 		this.signUpTemplate = Handlebars.compile($("#signup-template").html());
-		this.render();
 	},
 
 	el: "#signup-form",
@@ -37,13 +36,13 @@ App.Views.SignUp = Backbone.View.extend({
 		if (password === confirmPassword) {
 			if (password.length < 8 || password.length > 20) {
 				$('#signup-errors').empty();
-				$("<li>").text("Password length must be between 8-20 characters").appendTo("#signup-errors");
+				$("<li class='signup-error'>").text("Password length must be between 8-20 characters").appendTo("#signup-errors");
 			} else {
 				$.post("/users", userData)
 					.fail(function(err) {
 						var errors = "";
 						err.responseJSON.err.forEach(function(error) {
-							errors += "<li>" + error + "</li>";
+							errors += "<li class='signup-error'>" + error + "</li>";
 						});
 						$("#signup-errors").html(errors);
 					})

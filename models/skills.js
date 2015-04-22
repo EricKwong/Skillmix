@@ -15,13 +15,13 @@ module.exports = function(sequelize, DataTypes) {
         skills.belongsToMany(models.users, {
           through: "skills_users_know",
           foreignKey: "skill_id",
-          as: "SkillKnow"
+          as: "SkillKnows"
         });
 
         skills.belongsToMany(models.users, {
           through: "skills_users_want",
           foreignKey: "skill_id",
-          as: "SkillWant"
+          as: "SkillWants"
         });
       }
     }

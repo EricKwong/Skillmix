@@ -7,6 +7,7 @@ App.Views.Main = Backbone.View.extend({
 	el: "#main-container",
 
 	render: function() {
+		this.$el.empty();
 		this.collection.each(this.renderOne, this);
 	},
 
