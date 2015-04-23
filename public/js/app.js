@@ -15,24 +15,55 @@ $(function() {
 	App.sidebarView = new App.Views.Sidebar({model: App.currentUserModel});
 	App.loginView = new App.Views.Login;
 
-	var toggle = 0;
+	var toggle = 1;
 	$("#sidebar-button").on("click", function() {
 		if (toggle === 0) {
 			$("#sidebar-button").animate({
 				left: "260px"
-			},700);
+			},600);
 			$("#sidebar-container").animate({
 				left: "260px"
-			}, 700);
+			}, 600);
+			$("#main-container").animate({
+				left: "210px"
+			}, 600);
 			toggle = 1;
 		} else {
 			$("#sidebar-button").animate({
 				left: "0px"
-			},700);
+			},600);
 			$("#sidebar-container").animate({
 				left: "0px"
-			}, 700);
+			}, 600);
+			$("#main-container").animate({
+				left: "80px"
+			}, 600);
 			toggle = 0;
 		}
 	});
+
+	App.s3 = function s3_upload(){
+		        var status_elem = document.getElementById("status");
+		        var s3upload = new S3Upload({
+		            file_dom_selector: 'files',
+		            s3_sign_put_url: '/sign_s3',
+		            onProgress: function(percent, message) {
+		                status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
+		            },
+		            onFinishS3Put: function(public_url) {
+		                status_elem.innerHTML = 'Upload completed.'
+		                $.get("/sessions").done(function(data) {
+		                  $.ajax({
+		                    url: "/users/" + data.currentUser.toString(),
+		                    method: "PUT",
+		                    data: {image: public_url}
+		                  });
+		                });
+		            },
+		            onError: function(status) {
+		                status_elem.innerHTML = 'Upload error: ' + status;
+		            }
+		        });
+  };
+
 });

@@ -47,6 +47,10 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         isEmail: {msg: "Email address is invalid"}
       }
+    },
+    image: {
+      type: DataTypes.STRING,
+      defaultValue: "http://moss-side.yoursquaremile.co.uk/img/default-profile-pic.png?dim=96x96"
     }
   }, {
     

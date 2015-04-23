@@ -24,6 +24,7 @@ App.Views.Login = Backbone.View.extend({
 				thisView.renderLogout();
 				App.sidebarView.model.url = "/users/" + response.currentUser;
 				App.sidebarView.model.fetch();
+				$(".main-email").show();
 				$.get("/users/" + response.currentUser)
 					.done(function(user) {
 						var currentUserKnow = user.UserKnows.map(function(skill) {

@@ -2,21 +2,16 @@ var express    = require('express'),
     app        = express(),
     http       = require('http').Server(app),
     io         = require('socket.io')(http),
-    session    = require('express-session'),
     morgan     = require('morgan'),
     bodyParser = require('body-parser'),
     router     = require('./router')(app);
-
+    
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-app.use(session({
-  secret: "everyoneknows",
-  saveUninitialized: false,
-  resave: false
-}));
-
 app.use(express.static(__dirname + '/public'));
+
+
 
 // Socket IO
 

@@ -27,6 +27,9 @@ module.exports = {
       email: {
         type: DataTypes.STRING,
         unique: true
+      },
+      image: {
+        type: DataTypes.STRING
       }
     }).done(done);
   },

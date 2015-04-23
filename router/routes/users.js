@@ -3,6 +3,7 @@ var express    = require("express"),
 		models     = require("../../models"),
 		bodyParser = require("body-parser"),
 		morgan     = require("morgan"),
+		session    = require("express-session"),
 		router     = express.Router(),
 		User 		   = models.users,
 		Skill      = models.skills;
@@ -10,6 +11,17 @@ var express    = require("express"),
 router.use(morgan("dev"));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+
+var restrictAccess = function(req, res, next) {
+  var sessionID = parseInt( req.session.currentUser );
+  var reqID     = parseInt( req.params.id );
+
+  sessionID === reqID ? next() : res.status(401).send({err: 401, msg: "Unauthorized Access"})
+};
+
+var authenticate = function(req, res, next) {
+  req.session.currentUser ? next() : res.status(400).send({err: 400, msg:"Access Denied: Please Login"})
+};
 
 router.get("/", function(req, res) {
 	User
@@ -97,6 +109,20 @@ router.get("/:id", function(req, res) {
 		})
 		.then(function(user) {
 			res.send(user);
+		});
+});
+
+router.put("/:id", function(req, res) {
+	User
+		.findOne({
+			where: {id: req.params.id}
+		}).then(function(user) {
+			user
+				.update({
+					image: req.body.image
+				}).then(function(updatedUser) {
+					res.send(updatedUser);
+				});
 		});
 });
 
