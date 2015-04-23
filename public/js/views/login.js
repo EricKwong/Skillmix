@@ -11,7 +11,8 @@ App.Views.Login = Backbone.View.extend({
 
 	events: {
 		"click #login-button" : "userLogin",
-		"click #logout-button" : "userLogout"
+		"click #logout-button" : "userLogout",
+		"keypress input" : "keypress"
 	},
 
 	render: function() {
@@ -52,6 +53,12 @@ App.Views.Login = Backbone.View.extend({
 				$("#sidebar-button").text("Sign Up");
 			}
 		});
+	},
+
+	keypress: function(event) {
+		if (event.keyCode === 13 || event.which === 13) {
+			this.userLogin();
+		}
 	},
 
 	renderLogin: function() {
