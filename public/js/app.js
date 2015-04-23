@@ -19,24 +19,24 @@ $(function() {
 	$("#sidebar-button").on("click", function() {
 		if (toggle === 0) {
 			$("#sidebar-button").animate({
-				left: "260px"
+				right: "260px"
 			},600);
 			$("#sidebar-container").animate({
-				left: "260px"
+				right: "0"
 			}, 600);
 			$("#main-container").animate({
-				left: "210px"
+				left: "80px"
 			}, 600);
 			toggle = 1;
 		} else {
 			$("#sidebar-button").animate({
-				left: "0px"
+				right: "0px"
 			},600);
 			$("#sidebar-container").animate({
-				left: "0px"
+				right: "-260px"
 			}, 600);
 			$("#main-container").animate({
-				left: "80px"
+				left: "210px"
 			}, 600);
 			toggle = 0;
 		}
