@@ -108,7 +108,7 @@ p.skill {
 #main-container {
 	margin-top: 40px;
 	position: absolute;
-	left: 70px;
+	left: 210px;
 	width: 75%;
 	float: right;
 }
@@ -122,13 +122,12 @@ p.skill {
 }
 
 #sidebar-container {
-	right: 0;
+	right: -260px;
 	background-color: rgba(0,0,0,0.3);
 	position: fixed;
 	height: 100%;
 	padding: 30px;
 	width: 200px;
-	float: right;
 }
 
 #sidebar-container p {
@@ -181,7 +180,7 @@ p.skill {
 	position: fixed;
 	margin: 20px 15px 0px 0px;
 	cursor: pointer;
-	right: 260px;
+	right: 0px;
 }
 
 #sidebar-button:hover {

@@ -15,7 +15,7 @@ $(function() {
 	App.sidebarView = new App.Views.Sidebar({model: App.currentUserModel});
 	App.loginView = new App.Views.Login;
 
-	var toggle = 1;
+	var toggle = 0;
 	$("#sidebar-button").on("click", function() {
 		if (toggle === 0) {
 			$("#sidebar-button").animate({
@@ -25,7 +25,7 @@ $(function() {
 				right: "0"
 			}, 600);
 			$("#main-container").animate({
-				left: "80px"
+				left: "70px"
 			}, 600);
 			toggle = 1;
 		} else {
