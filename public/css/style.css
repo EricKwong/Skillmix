@@ -78,9 +78,8 @@ p.skill {
 	width: auto;
 }
  
-#search {
-	float: right;
-	margin: 10px;
+#logout {
+	margin-top: 6px;
 }
 
 .delete {
