@@ -42,6 +42,7 @@ $(function() {
 		}
 	});
 
+
 	App.s3 = function s3_upload(){
 		        var status_elem = document.getElementById("status");
 		        var s3upload = new S3Upload({

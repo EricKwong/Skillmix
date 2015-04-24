@@ -90,6 +90,7 @@ p.skill {
 
 .skill {
 	margin-left: 10px;
+	padding: 0px 4px 0px 4px;
 }
 
 #login-container {
@@ -126,7 +127,7 @@ p.skill {
 	background-color: rgba(0,0,0,0.3);
 	position: fixed;
 	height: 100%;
-	padding: 30px;
+	padding: 25px;
 	width: 200px;
 }
 
@@ -186,12 +187,34 @@ p.skill {
 #sidebar-button:hover {
 	color: rgba(0,0,0,0.3);
 }
-.delete-skill {
+.delete {
+	cursor: pointer;
 	float: right;
+	bottom: 20px;
+	position: relative;
+}
+
+.delete:hover {
+	color: red;
 }
 
 .signup-error {
 	font-size: 12px;
 	margin: 0px 0px 4px 4px;
 	list-style-type: circle;
+}
+
+#upload {
+	text-align: center;
+}
+
+#sidebar-username {
+	font-weight: 100;
+	font-size: 30px;
+}
+
+#add-known-skills, #add-wanted-skills {
+	width: 170px;
+	font-size: 14px;
+	margin-bottom: 15px;
 }

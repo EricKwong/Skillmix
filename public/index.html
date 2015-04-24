@@ -103,7 +103,7 @@
         <input type="file" id="files" onchange="App.s3()">
       </section>
 
-      <p id="sidebar-username">{{username}}</p>
+      <h2 id="sidebar-username">{{username}}</h2>
       <ul id="sidebar-skills">
         <input id="add-known-skills" placeholder="Skills you know">
         {{#each UserKnows}}
@@ -112,6 +112,7 @@
             <p class="delete delete-know-skill" data-skill-id="{{id}}">X</p>
           </li>
         {{/each}}
+        <hr>
         <input id="add-wanted-skills" placeholder="Skills you want">
         {{#each UserWants}}
           <li class="skill-list-item">
@@ -127,8 +128,7 @@
         <div class="main-user-image" style="background-image:url({{image}})"></div>
       </section>
       <h2 class="main-username">{{username}}</h2>
-      <p class="main-firstname">First Name: {{first_name}}</p>
-      <p class="main-lastname">Last Name: {{last_name}}</p>
+      <p class="main-name">Name: {{first_name}} {{last_name}}</p>
       <p class="main-location">Location: {{location}}</p>
       <p class="main-email">Contact: {{email}}</p>
       <ul>
