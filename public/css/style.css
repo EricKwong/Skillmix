@@ -218,3 +218,11 @@ p.skill {
 	font-size: 14px;
 	margin-bottom: 15px;
 }
+
+p.main-location {
+	margin-bottom: 30px;
+}
+
+.main-username {
+	text-align: center;
+}
